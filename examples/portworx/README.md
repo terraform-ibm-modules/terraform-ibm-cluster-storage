@@ -1,19 +1,9 @@
-# Terraform module to create storage classes for a cluster
+# Terraform template to install Portworx on a VPC cluster
 
-This module is used to create following storage solutions for IBM Cloud Kubernetes Service clusters
+This Terraform template installs the **Portworx Service** on VPC cluster on an IBM Cloud.
 
-* File Storage
-* Block storage
-* Object storage
-* Software Defined Storage(SDS) with protworx on VPC cluster
 
-## Compatibility
-
-This module is meant for use with Terraform >= 0.13.
-
-## Usage
-
-Example to create Software Defined Storage(SDS) with protworx on VPC cluster
+### Provisioning the Portworx on ROKS cluster
 
 ```hcl
 module "portworx" {
@@ -34,7 +24,6 @@ module "portworx" {
   etcd_secret_name     = var.etcd_secret_name
 
 }
-
 ```
 
 ## Input Variables
@@ -64,65 +53,7 @@ module "portworx" {
 | `pwx_plan`                | Portworx plan type                        | `px-enterprise` | Yes |
 | `cluster_name`             | Name of the cluster  | `pwx`    | Yes |
 | `secret_type`             | secret type  | `k8s`    | no |
-## Requirements
 
-### Terraform plugins
-
-- [Terraform](https://www.terraform.io/downloads.html) >= 0.13
-- [terraform-provider-ibm](https://github.com/IBM-Cloud/terraform-provider-ibm)
-
-## Install
-
-### Terraform
-
-Be sure you have the correct Terraform version (>= 0.13), you can choose the binary here:
-- https://releases.hashicorp.com/terraform/
-
-### Terraform plugins
-
-Be sure you have the compiled plugins on $HOME/.terraform.d/plugins/
-
-- [terraform-provider-ibm](https://github.com/IBM-Cloud/terraform-provider-ibm)
-
-### Pre-commit Hooks
-
-Run the following command to execute the pre-commit hooks defined in .pre-commit-config.yaml file
-
-pre-commit run -a
-
-We can install pre-coomit tool using
-
-pip install pre-commit
-
-      or
-
-pip3 install pre-commit
-
-### Detect Secret hook
-
-Used to detect secrets within a code base.
-
-To create a secret baseline file run following command
-
-```
-detect-secrets scan --update .secrets.baseline
-```
-
-While running the pre-commit hook, if you encounter an error like
-
-```
-WARNING: You are running an outdated version of detect-secrets.
-Your version: 0.13.1+ibm.27.dss
-Latest version: 0.13.1+ibm.46.dss
-See upgrade guide at https://ibm.biz/detect-secrets-how-to-upgrade
-```
-
-run below command
-
-```
-pre-commit autoupdate
-```
-which upgrades all the pre-commit hooks present in .pre-commit.yaml file.
 
 ## Executing the Terraform Script
 
@@ -134,8 +65,6 @@ terraform plan
 terraform apply -auto-approve
 ```
 
-All optional parameters by default will be set to null in respective example's varaible.tf file. If user wants to configure any optional paramter he has overwrite the default value.
-
 ## Clean up
 
 To remove Portworx and Storage from a cluster, execute the following command:
@@ -143,7 +72,3 @@ To remove Portworx and Storage from a cluster, execute the following command:
 ```bash
 terraform destroy
 ```
-
-## Note
-
-All optional fields should be given value `null` in respective resource varaible.tf file. User can configure the same by overwriting with appropriate values.
