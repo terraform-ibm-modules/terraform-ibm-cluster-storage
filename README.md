@@ -5,7 +5,7 @@ This module is used to create following storage solutions for IBM Cloud Kubernet
 * File Storage
 * Block storage
 * Object storage
-* Software Defined Storage(SDS) with protworx on VPC cluster
+* Software Defined Storage(SDS) with portworx on VPC cluster
 
 ## Compatibility
 
@@ -13,7 +13,7 @@ This module is meant for use with Terraform >= 0.13.
 
 ## Usage
 
-Example to create Software Defined Storage(SDS) with protworx on VPC cluster
+Example to create Software Defined Storage(SDS) with portworx on VPC cluster
 
 ```hcl
 module "portworx" {
