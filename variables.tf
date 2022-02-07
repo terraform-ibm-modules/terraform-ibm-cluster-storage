@@ -78,6 +78,12 @@ variable "etcd_secret_name" {
   default = "px-etcd-cert" # don't change this
 }
 
+variable "is_enable_portworx" {
+  default = false
+  type = bool
+  description = "Set to true to enable Portworx install"
+}
+
 ##############################################################################
 
 ##############################################################################
@@ -142,4 +148,22 @@ variable secret_type {
   description = "secret type"
   type        = string
   default     = "k8s"
+}
+
+##############################################################################
+
+##############################################################################
+# ODF Variables
+##############################################################################
+
+variable "roks_version" {
+  default = "4.7"
+  type = string
+  description = "Roks version of the cluster where ODF will be installed. For this script it needs to be 4.7 and up"
+}
+
+variable "is_enable_odf" {
+  default = false
+  type = bool
+  description = "Set to true to enable ODF install"
 }

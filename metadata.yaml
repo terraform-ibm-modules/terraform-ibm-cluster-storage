@@ -11,7 +11,7 @@ owner: "ibmtfprovider"
 published_at: "2021-12-02T10:34:28.911362Z"
 registry: "https://registry.terraform.io/modules/terraform-ibm-modules/cluster-storage/ibm/latest"
 alias: "portworx"
-tags: ["portworx","storage","cluster","cluster-storage"]
+tags: ["portworx","storage","cluster","cluster-storage","odf"]
 ###################################
 # Root module
 ###################################
@@ -293,6 +293,28 @@ root:
         is_force_new: false
         is_provision_controller: false
         is_count_controller: false
+      - name: "roks_version"
+        type : string
+        is_required: false
+        description: "Roks version of the cluster where ODF will be installed. For this script it needs to be 4.7 and up"
+        example: "4.7"
+        is_sensitive: false
+        related_to: ["null_resource.odf"]
+        is_nullable: false
+        is_force_new: false
+        is_provision_controller: false
+        is_count_controller: false
+      - name: "is_enable_odf"
+        type : bool
+        is_required: false
+        description: "Set to true to enable ODF install"
+        example: true
+        is_sensitive: false
+        related_to: ["null_resource.odf"]
+        is_nullable: false
+        is_force_new: false
+        is_provision_controller: false
+        is_count_controller: false
     outputs:
       - name: "portworx_is_ready"
         type : string
@@ -321,6 +343,10 @@ root:
         name: "volume_attach"
         description : "Attach volume to each worker node"
         provider: "ibm"
+      - type : "null_resource"
+        name: "odf"
+        description : "Enables ODF on the cluster"
+        provider: "custom"
     datasources:
       - type : "ibm_resource_group"
         name: "group"

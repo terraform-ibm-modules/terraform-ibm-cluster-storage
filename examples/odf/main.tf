@@ -5,10 +5,10 @@ provider "ibm" {
 // Module:
 
 module "odf" {
-  source = "./../../modules/odf"
+  source = "./../.."
   // TODO: With Terraform 0.13 replace the parameter 'enable' or the conditional expression using 'with_iaf' with 'count'
-  enable = var.enable
-  cluster_id = var.cluster_id
+  is_enable_odf = var.is_enable_odf
+  cluster = var.cluster
   roks_version = var.roks_version
 
   // Cluster parameters
