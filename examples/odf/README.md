@@ -60,7 +60,7 @@ After the service shows as active in the IBM Cloud resource view, verify the dep
 This should display something like the following:
 
     openshift-data-foundation                 4.7.0     Normal     Addon Ready
-    
+
 Verify that the ibm-ocs-operator-controller-manager-***** pod is running in the kube-system namespace.
 
     oc get pods -A | grep ibm-ocs-operator-controller-manager

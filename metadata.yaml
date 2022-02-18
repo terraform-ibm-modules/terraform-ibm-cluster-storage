@@ -293,17 +293,6 @@ root:
         is_force_new: false
         is_provision_controller: false
         is_count_controller: false
-      - name: "roks_version"
-        type : string
-        is_required: false
-        description: "Roks version of the cluster where ODF will be installed. For this script it needs to be 4.7 and up"
-        example: "4.7"
-        is_sensitive: false
-        related_to: ["null_resource.odf"]
-        is_nullable: false
-        is_force_new: false
-        is_provision_controller: false
-        is_count_controller: false
       - name: "is_enable_odf"
         type : bool
         is_required: false
@@ -322,6 +311,12 @@ root:
         example: "crn:v1:bluemix:public:1734gd74"
         is_sensitive: false
         related_to: ["ibm_resource_instance.portworx"]
+      - name: "odf_is_ready"
+        type : string
+        description : "ID of odf instance"
+        example: "5938794176134383102"
+        is_sensitive: false
+        related_to: ["null_resource.enable_odf"]
     resources:
       - type : "ibm_database"
         name: "etcd"
