@@ -19,27 +19,34 @@ Follow these instructions to test the Terraform Module manually
 Create the file `test.auto.tfvars` with the following input variables, these values are fake examples:
 
 ```hcl
-enable                  = true
-ibmcloud_api_key        = "<api-key>"
-
-// Cluster parameters
-kube_config_path        = ".kube/config"
-worker_nodes            = 2  // Number of workers
+is_enable_odf           = true
+ibmcloud_api_key        = "<api-key>" // pragma: allowlist secret
 
 // ODF parameters
-resource_group_name     = "default"
-region                  = "us-east"
 cluster_id              = "<cluster-id>"
+monStorageClassName     = "ibmc-vpc-block-metro-10iops-tier"
+osdSize                 = 250
+workerNodes             = "all"
+ocsUpgrade              = false
+monSize                 = 20
+numOfOsd                = 1
+osdStorageClassName     = "ibmc-vpc-block-metro-10iops-tier"
+clusterEncryption       = false
 ```
 
 These parameters are:
 
 - `ibmcloud_api_key`: IBM Cloud Key needed to provision resources.
-- `config_dir`: Directory to download the kubeconfig file. Default value is `./.kube/config`
-- `worker_nodes`: Number of worker nodes in the cluster
-- `resource_group_name`: Resource group where the cluster is running. Default value is `Default`
-- `region`: Region that the resources are in
-- `cluster_id`: Cluster ID of the OpenShift cluster where to install IAF
+- `is_enable_odf`: Variable to enable install ODF
+- `cluster_id`: Cluster ID of the OpenShift cluster where to install ODF
+- `monStorageClassName`: Block Storage for VPC storage class that you want to use to dynamically provision storage for the monitor pods. The default storage class is ibmc-vpc-block-metro-10iops-tier
+- `osdSize`: Size of the Block Storage for VPC devices that you want to provision for the OSD pods. The default size is 250Gi
+- `workerNodes`: Worker nodes where you want to deploy ODF. You must have at least 3 worker nodes. The default setting is all. If you want to deploy ODF only on certain nodes, enter the IP addresses of the worker nodes in a comma-separated list without spaces, for example: XX.XXX.X.X,XX.XXX.X.X,XX.XXX.X.X
+- `ocsUpgrade`: Variable to upgrade the ODF operators. For initial deployment, leave this setting as false. The default setting is false
+- `monSize`: Size of the Block Storage for VPC devices that you want to provision for the ODF monitor pods. The default setting 20Gi
+- `numOfOsd`: Number of block storage device sets that you want to provision for ODF. A numOfOsd value of 1 provisions 1 device set which includes 3 block storage devices. The devices are provisioned evenly across your worker nodes. For more information, see https://cloud.ibm.com/docs/openshift?topic=openshift-ocs-storage-prep
+- `osdStorageClassName`: Block Storage for VPC storage class that you want to use to dynamically provision storage for the OSD pods. The default storage class is ibmc-vpc-block-metro-10iops-tier
+- `clusterEncryption`: Enter true or false to enable cluster encryption. The default setting is false
 
 Execute the following Terraform commands:
 
@@ -69,6 +76,21 @@ This should produce output like:
 
     kube-system              ibm-ocs-operator-controller-manager-58fcf45bd6-68pq5              1/1     Running            0          5d22h
 
-## 4. Cleanup
+## 4. Clean up
 
-WIP
+When the cluster is no longer needed, run `terraform destroy` if this was created using your local Terraform client with `terraform apply`. 
+
+If this cluster was created using `schematics`, just delete the schematics workspace and specify to delete all created resources.
+
+<b>For ODF:</b>
+
+To uninstall ODF and its dependencies from a cluster, execute the following commands:
+
+While logged into the cluster
+
+```bash
+terraform destroy -target null_resource.enable_odf
+```
+This will disable the ODF on the cluster
+
+Once this completes, execute: `terraform destroy` if this was create locally using Terraform or remove the Schematic's workspace.

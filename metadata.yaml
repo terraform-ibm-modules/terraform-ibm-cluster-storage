@@ -299,7 +299,95 @@ root:
         description: "Set to true to enable ODF install"
         example: true
         is_sensitive: false
-        related_to: ["null_resource.odf"]
+        related_to: ["null_resource.enable_odf"]
+        is_nullable: false
+        is_force_new: false
+        is_provision_controller: false
+        is_count_controller: false
+      - name: "monStorageClassName"
+        type : string
+        is_required: false
+        description: "Block Storage for VPC storage class that you want to use to dynamically provision storage for the monitor pods. The default storage class is ibmc-vpc-block-metro-10iops-tier"
+        example: "ibmc-vpc-block-metro-10iops-tier"
+        is_sensitive: false
+        related_to: ["null_resource.enable_odf"]
+        is_nullable: false
+        is_force_new: false
+        is_provision_controller: false
+        is_count_controller: false
+      - name: "osdSize"
+        type : number
+        is_required: false
+        description: "Enter the size of the Block Storage for VPC devices that you want to provision for the OSD pods. The default size is 250Gi"
+        example: 250
+        is_sensitive: false
+        related_to: ["null_resource.enable_odf"]
+        is_nullable: false
+        is_force_new: false
+        is_provision_controller: false
+        is_count_controller: false
+      - name: "workerNodes"
+        type : string
+        is_required: false
+        description: "Enter the worker nodes where you want to deploy ODF. You must have at least 3 worker nodes. The default setting is all. If you want to deploy ODF only on certain nodes, enter the IP addresses of the worker nodes in a comma-separated list without spaces, for example: XX.XXX.X.X,XX.XXX.X.X,XX.XXX.X.X"
+        example: "all"
+        is_sensitive: false
+        related_to: ["null_resource.enable_odf"]
+        is_nullable: false
+        is_force_new: false
+        is_provision_controller: false
+        is_count_controller: false
+      - name: "ocsUpgrade"
+        type : bool
+        is_required: false
+        description: "Enter true or false to upgrade the ODF operators. For initial deployment, leave this setting as false. The default setting is false"
+        example: false
+        is_sensitive: false
+        related_to: ["null_resource.enable_odf"]
+        is_nullable: false
+        is_force_new: false
+        is_provision_controller: false
+        is_count_controller: false
+      - name: "monSize"
+        type : number
+        is_required: false
+        description: "Enter the size of the Block Storage for VPC devices that you want to provision for the ODF monitor pods. The default setting 20Gi"
+        example: 20
+        is_sensitive: false
+        related_to: ["null_resource.enable_odf"]
+        is_nullable: false
+        is_force_new: false
+        is_provision_controller: false
+        is_count_controller: false
+      - name: "numOfOsd"
+        type : number
+        is_required: false
+        description: "Enter the number of block storage device sets that you want to provision for ODF. A numOfOsd value of 1 provisions 1 device set which includes 3 block storage devices. The devices are provisioned evenly across your worker nodes. For more information, see https://cloud.ibm.com/docs/openshift?topic=openshift-ocs-storage-prep"
+        example: 1
+        is_sensitive: false
+        related_to: ["null_resource.enable_odf"]
+        is_nullable: false
+        is_force_new: false
+        is_provision_controller: false
+        is_count_controller: false
+      - name: "osdStorageClassName"
+        type : string
+        is_required: false
+        description: "Enter the Block Storage for VPC storage class that you want to use to dynamically provision storage for the OSD pods. The default storage class is ibmc-vpc-block-metro-10iops-tier"
+        example: "ibmc-vpc-block-metro-10iops-tier"
+        is_sensitive: false
+        related_to: ["null_resource.enable_odf"]
+        is_nullable: false
+        is_force_new: false
+        is_provision_controller: false
+        is_count_controller: false
+      - name: "clusterEncryption"
+        type : bool
+        is_required: false
+        description: "Enter true or false to enable cluster encryption. The default setting is false"
+        example: false
+        is_sensitive: false
+        related_to: ["null_resource.enable_odf"]
         is_nullable: false
         is_force_new: false
         is_provision_controller: false
