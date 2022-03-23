@@ -78,7 +78,7 @@ This should produce output like:
 
 ## 4. Clean up
 
-When the cluster is no longer needed, run `terraform destroy` if this was created using your local Terraform client with `terraform apply`. 
+When the cluster is no longer needed, run `terraform destroy` if this was created using your local Terraform client with `terraform apply`.
 
 If this cluster was created using `schematics`, just delete the schematics workspace and specify to delete all created resources.
 

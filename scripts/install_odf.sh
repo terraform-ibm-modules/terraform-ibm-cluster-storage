@@ -29,6 +29,6 @@ if [ $ROKS_VERSION_COMP -ge 470 ]; then
     --param "clusterEncryption=${CLUSTER_ENCRYPTION}"
 
 else
-    echo "Not supported version. Openshift version needs to be 4.7 or higher"; 
+    echo "Not supported version. Openshift version needs to be 4.7 or higher";
     exit 1
 fi
