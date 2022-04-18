@@ -1,5 +1,9 @@
 # Test ODF Terraform Module
 
+This Terraform Module installs the **ODF Service** on an Openshift (ROKS) cluster on IBM Cloud.
+
+A VPC cluster is required with at least three worker nodes. Each worker node must have a minimum of 16 CPUs and 64 GB RAM. https://cloud.ibm.com/docs/openshift?topic=openshift-deploy-odf-vpc for more information.
+
 ## 1. Set up access to IBM Cloud
 
 If running this module from your local terminal, you need to set the credentials to access IBM Cloud.
@@ -26,7 +30,7 @@ ibmcloud_api_key        = "<api-key>" // pragma: allowlist secret
 cluster_id              = "<cluster-id>"
 monStorageClassName     = "ibmc-vpc-block-metro-10iops-tier"
 osdSize                 = 250
-workerNodes             = "all"
+billingType             = "advanced"
 ocsUpgrade              = false
 monSize                 = 20
 numOfOsd                = 1
@@ -41,7 +45,7 @@ These parameters are:
 - `cluster_id`: Cluster ID of the OpenShift cluster where to install ODF
 - `monStorageClassName`: Block Storage for VPC storage class that you want to use to dynamically provision storage for the monitor pods. The default storage class is ibmc-vpc-block-metro-10iops-tier
 - `osdSize`: Size of the Block Storage for VPC devices that you want to provision for the OSD pods. The default size is 250Gi
-- `workerNodes`: Worker nodes where you want to deploy ODF. You must have at least 3 worker nodes. The default setting is all. If you want to deploy ODF only on certain nodes, enter the IP addresses of the worker nodes in a comma-separated list without spaces, for example: XX.XXX.X.X,XX.XXX.X.X,XX.XXX.X.X
+- `billingType`: Billing Type for your ODF deployment (essentials or advanced).
 - `ocsUpgrade`: Variable to upgrade the ODF operators. For initial deployment, leave this setting as false. The default setting is false
 - `monSize`: Size of the Block Storage for VPC devices that you want to provision for the ODF monitor pods. The default setting 20Gi
 - `numOfOsd`: Number of block storage device sets that you want to provision for ODF. A numOfOsd value of 1 provisions 1 device set which includes 3 block storage devices. The devices are provisioned evenly across your worker nodes. For more information, see https://cloud.ibm.com/docs/openshift?topic=openshift-ocs-storage-prep

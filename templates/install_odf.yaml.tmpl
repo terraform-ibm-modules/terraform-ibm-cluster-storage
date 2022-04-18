@@ -1,0 +1,13 @@
+apiVersion: ocs.ibm.io/v1
+kind: OcsCluster
+metadata:
+  name: ocscluster-vpc
+spec:
+  #monStorageClassName: ${ monStorageClassName }
+  #monSize: ${ monSize }
+  osdStorageClassName: ${ osdStorageClassName }
+  osdSize: ${ osdSize }
+  numOfOsd: ${ numOfOsd }
+  billingType: ${ billingType }
+  ocsUpgrade: ${ ocsUpgrade }
+  clusterEncryption: ${ clusterEncryption }

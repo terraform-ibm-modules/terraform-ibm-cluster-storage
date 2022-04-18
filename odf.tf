@@ -2,6 +2,19 @@
 # Install ODF on the cluster
 ##################################
 
+locals {
+  installation_content = templatefile("${path.module}/templates/install_odf.yaml.tmpl", {
+    #monSize = var.monSize, # roks version 4.7
+    #monStorageClassName = var.monStorageClassName, # roks version 4.7
+    osdStorageClassName = var.osdStorageClassName,
+    osdSize             = var.osdSize,
+    numOfOsd            = var.numOfOsd,
+    billingType         = var.billingType,
+    ocsUpgrade          = var.ocsUpgrade,
+    clusterEncryption   = var.clusterEncryption
+  })
+}
+
 # Install ODF if the rocks version is v4.7 or newer
 resource "null_resource" "enable_odf" {
   count = var.is_enable_odf ? 1 : 0
@@ -16,16 +29,9 @@ resource "null_resource" "enable_odf" {
     command     = "${path.module}/scripts/install_odf.sh"
 
     environment = {
-      IC_API_KEY             = var.ibmcloud_api_key
-      CLUSTER                = var.cluster
-      MON_STORAGE_CLASS_NAME = var.monStorageClassName
-      OSD_SIZE               = var.osdSize
-      WORKER_NODES           = var.workerNodes
-      OCS_UPGRADE            = var.ocsUpgrade
-      MON_SIZE               = var.monSize
-      NUM_OF_OSD             = var.numOfOsd
-      OSD_STORAGE_CLASS_NAME = var.osdStorageClassName
-      CLUSTER_ENCRYPTION     = var.clusterEncryption
+      IC_API_KEY     = var.ibmcloud_api_key
+      CLUSTER        = var.cluster
+      ODF_CR_CONTENT = local.installation_content
     }
   }
 

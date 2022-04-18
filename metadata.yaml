@@ -326,10 +326,10 @@ root:
         is_force_new: false
         is_provision_controller: false
         is_count_controller: false
-      - name: "workerNodes"
+      - name: "billingType"
         type : string
         is_required: false
-        description: "Enter the worker nodes where you want to deploy ODF. You must have at least 3 worker nodes. The default setting is all. If you want to deploy ODF only on certain nodes, enter the IP addresses of the worker nodes in a comma-separated list without spaces, for example: XX.XXX.X.X,XX.XXX.X.X,XX.XXX.X.X"
+        description: "Billing Type for your ODF deployment (`essentials` or `advanced`)."
         example: "all"
         is_sensitive: false
         related_to: ["null_resource.enable_odf"]

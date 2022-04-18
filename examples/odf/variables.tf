@@ -24,10 +24,10 @@ variable "osdSize" {
   description = "Enter the size of the Block Storage for VPC devices that you want to provision for the OSD pods. The default size is 250Gi"
 }
 
-variable "workerNodes" {
-  default     = "all"
+variable "billingType" {
   type        = string
-  description = "Enter the worker nodes where you want to deploy ODF. You must have at least 3 worker nodes. The default setting is all. If you want to deploy ODF only on certain nodes, enter the IP addresses of the worker nodes in a comma-separated list without spaces, for example: XX.XXX.X.X,XX.XXX.X.X,XX.XXX.X.X"
+  default     = "advanced"
+  description = "Billing Type for your ODF deployment (`essentials` or `advanced`)."
 }
 
 variable "ocsUpgrade" {
