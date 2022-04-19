@@ -172,7 +172,7 @@ variable "monStorageClassName" {
 # Option required for Openshift 4.7 only
 variable "monSize" {
   default     = "20Gi"
-  type        = number
+  type        = string
   description = "Enter the size of the Block Storage for VPC devices that you want to provision for the ODF monitor pods. The default setting 20Gi"
 }
 
@@ -184,7 +184,7 @@ variable "osdStorageClassName" {
 
 variable "osdSize" {
   default     = "100Gi"
-  type        = number
+  type        = string
   description = "Enter the size of the Block Storage for VPC devices that you want to provision for the OSD pods. The default size is 250Gi"
 }
 
