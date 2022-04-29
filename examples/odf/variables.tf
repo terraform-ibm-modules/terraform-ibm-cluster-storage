@@ -59,3 +59,28 @@ variable "clusterEncryption" {
   type        = bool
   description = "Enter true or false to enable cluster encryption. The default setting is false"
 }
+
+#################################
+
+variable "region" {
+  description = "The region Portworx will be installed in: us-south, us-east, eu-gb, eu-de, jp-tok, au-syd, etc."
+  default     = "us-south"
+}
+
+variable "unique_id" {
+  description = "unique identifiers for all created resources"
+  type        = string
+  default     = "pwx"
+}
+
+variable "resource_group_name" {
+  description = "resource group of existing kubernetes cluster"
+  type        = string
+  default     = "Default"
+}
+
+variable "kube_config_path" {
+  description = "Path to the k8s config file: ex `~/.kube`"
+  type        = string
+  default     = "/tmp"
+}
