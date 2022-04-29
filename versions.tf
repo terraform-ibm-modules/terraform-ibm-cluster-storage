@@ -4,8 +4,10 @@
 #####################################################
 
 /*
+
 NOTE: To source a particular version of IBM terraform
 provider version, configure the parameter `version`.
+
 */
 
 terraform {
