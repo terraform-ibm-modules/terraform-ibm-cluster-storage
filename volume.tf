@@ -42,7 +42,7 @@ resource "ibm_is_volume" "volume" {
 ##############################################################################
 resource "ibm_container_storage_attachment" "volume_attach" {
   count   = var.install_storage ? length(data.ibm_container_vpc_cluster_worker.worker) : 0
-  volume  = ibm_is_volume.storage[count.index].id
+  volume  = ibm_is_volume.volume[count.index].id
   cluster = data.ibm_container_vpc_cluster.cluster.id
   worker  = data.ibm_container_vpc_cluster_worker.worker[count.index].id
 }
