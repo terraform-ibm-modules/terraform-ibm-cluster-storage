@@ -3,10 +3,11 @@ provider "ibm" {}
 // Module:
 
 module "odf" {
-  source        = "./../.."
+  source = "./../.."
 
   is_enable_odf = var.is_enable_odf
   cluster       = var.cluster
+
   ibmcloud_api_key = var.ibmcloud_api_key
   region           = var.region
   resource_group   = var.resource_group_name
