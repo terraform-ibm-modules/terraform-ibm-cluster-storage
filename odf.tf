@@ -4,8 +4,6 @@
 
 locals {
   installation_content = templatefile("${path.module}/templates/install_odf.yaml.tmpl", {
-    #monSize = var.monSize, # roks version 4.7
-    #monStorageClassName = var.monStorageClassName, # roks version 4.7
     osdStorageClassName = var.osdStorageClassName,
     osdSize             = var.osdSize,
     numOfOsd            = var.numOfOsd,
