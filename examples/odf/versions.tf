@@ -13,7 +13,7 @@ terraform {
   required_providers {
     ibm = {
       source  = "ibm-cloud/ibm"
-      version = "1.34"
+      version = "1.36"
     }
     null = {
       source = "hashicorp/null"
