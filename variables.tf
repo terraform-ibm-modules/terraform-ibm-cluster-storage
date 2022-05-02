@@ -211,3 +211,8 @@ variable "clusterEncryption" {
   type        = bool
   description = "Enter true or false to enable cluster encryption. The default setting is false"
 }
+
+variable "roks_version" {
+  type        = string
+  description = "ROKS Cluster version (4.7 or higher)"
+}
