@@ -146,3 +146,8 @@ variable "secret_type" {
   type        = string
   default     = "k8s"
 }
+
+variable "roks_version" {
+  type        = string
+  description = "ROKS Cluster version (4.7 or higher)"
+}
