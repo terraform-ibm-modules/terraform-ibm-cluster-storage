@@ -39,6 +39,7 @@ module "odf" {
 
   is_enable_odf = var.is_enable_odf
   cluster       = var.cluster
+  roks_version  = var.roks_version
 
   ibmcloud_api_key = var.ibmcloud_api_key
   region           = var.region

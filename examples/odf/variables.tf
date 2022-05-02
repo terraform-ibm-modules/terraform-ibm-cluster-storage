@@ -84,3 +84,8 @@ variable "kube_config_path" {
   type        = string
   default     = "/tmp"
 }
+
+variable "roks_version" {
+  type        = string
+  description = "ROKS Cluster version (4.7 or higher)"
+}
