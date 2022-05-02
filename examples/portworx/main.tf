@@ -43,7 +43,7 @@ module "portworx" {
   region           = var.region
   resource_group   = var.resource_group_name
   cluster          = var.cluster
-  rocks_version    = var.rocks_version
+  roks_version     = var.roks_version
   unique_id        = var.unique_id
   kube_config_path = data.ibm_container_cluster_config.cluster_config.config_file_path
 
