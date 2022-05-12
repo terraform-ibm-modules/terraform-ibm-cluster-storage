@@ -46,6 +46,8 @@ resource "kubernetes_secret" "etcd" {
 # Install Portworx on the cluster
 ##################################
 resource "ibm_resource_instance" "portworx" {
+  count = var.is_enable_portworx ? 1 : 0
+
   depends_on = [
     ibm_container_storage_attachment.volume_attach,
     kubernetes_secret.etcd,

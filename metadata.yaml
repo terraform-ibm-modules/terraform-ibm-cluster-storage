@@ -11,7 +11,7 @@ owner: "ibmtfprovider"
 published_at: "2021-12-02T10:34:28.911362Z"
 registry: "https://registry.terraform.io/modules/terraform-ibm-modules/cluster-storage/ibm/latest"
 alias: "portworx"
-tags: ["portworx","storage","cluster","cluster-storage"]
+tags: ["portworx","storage","cluster","cluster-storage","odf"]
 ###################################
 # Root module
 ###################################
@@ -293,6 +293,105 @@ root:
         is_force_new: false
         is_provision_controller: false
         is_count_controller: false
+      - name: "is_enable_odf"
+        type : bool
+        is_required: false
+        description: "Set to true to enable ODF install"
+        example: true
+        is_sensitive: false
+        related_to: ["null_resource.enable_odf"]
+        is_nullable: false
+        is_force_new: false
+        is_provision_controller: false
+        is_count_controller: false
+      - name: "monStorageClassName"
+        type : string
+        is_required: false
+        description: "Block Storage for VPC storage class that you want to use to dynamically provision storage for the monitor pods. The default storage class is ibmc-vpc-block-metro-10iops-tier"
+        example: "ibmc-vpc-block-metro-10iops-tier"
+        is_sensitive: false
+        related_to: ["null_resource.enable_odf"]
+        is_nullable: false
+        is_force_new: false
+        is_provision_controller: false
+        is_count_controller: false
+      - name: "osdSize"
+        type : number
+        is_required: false
+        description: "Enter the size of the Block Storage for VPC devices that you want to provision for the OSD pods. The default size is 250Gi"
+        example: 250
+        is_sensitive: false
+        related_to: ["null_resource.enable_odf"]
+        is_nullable: false
+        is_force_new: false
+        is_provision_controller: false
+        is_count_controller: false
+      - name: "billingType"
+        type : string
+        is_required: false
+        description: "Billing Type for your ODF deployment (`essentials` or `advanced`)."
+        example: "all"
+        is_sensitive: false
+        related_to: ["null_resource.enable_odf"]
+        is_nullable: false
+        is_force_new: false
+        is_provision_controller: false
+        is_count_controller: false
+      - name: "ocsUpgrade"
+        type : bool
+        is_required: false
+        description: "Enter true or false to upgrade the ODF operators. For initial deployment, leave this setting as false. The default setting is false"
+        example: false
+        is_sensitive: false
+        related_to: ["null_resource.enable_odf"]
+        is_nullable: false
+        is_force_new: false
+        is_provision_controller: false
+        is_count_controller: false
+      - name: "monSize"
+        type : number
+        is_required: false
+        description: "Enter the size of the Block Storage for VPC devices that you want to provision for the ODF monitor pods. The default setting 20Gi"
+        example: 20
+        is_sensitive: false
+        related_to: ["null_resource.enable_odf"]
+        is_nullable: false
+        is_force_new: false
+        is_provision_controller: false
+        is_count_controller: false
+      - name: "numOfOsd"
+        type : number
+        is_required: false
+        description: "Enter the number of block storage device sets that you want to provision for ODF. A numOfOsd value of 1 provisions 1 device set which includes 3 block storage devices. The devices are provisioned evenly across your worker nodes. For more information, see https://cloud.ibm.com/docs/openshift?topic=openshift-ocs-storage-prep"
+        example: 1
+        is_sensitive: false
+        related_to: ["null_resource.enable_odf"]
+        is_nullable: false
+        is_force_new: false
+        is_provision_controller: false
+        is_count_controller: false
+      - name: "osdStorageClassName"
+        type : string
+        is_required: false
+        description: "Enter the Block Storage for VPC storage class that you want to use to dynamically provision storage for the OSD pods. The default storage class is ibmc-vpc-block-metro-10iops-tier"
+        example: "ibmc-vpc-block-metro-10iops-tier"
+        is_sensitive: false
+        related_to: ["null_resource.enable_odf"]
+        is_nullable: false
+        is_force_new: false
+        is_provision_controller: false
+        is_count_controller: false
+      - name: "clusterEncryption"
+        type : bool
+        is_required: false
+        description: "Enter true or false to enable cluster encryption. The default setting is false"
+        example: false
+        is_sensitive: false
+        related_to: ["null_resource.enable_odf"]
+        is_nullable: false
+        is_force_new: false
+        is_provision_controller: false
+        is_count_controller: false
     outputs:
       - name: "portworx_is_ready"
         type : string
@@ -300,6 +399,12 @@ root:
         example: "crn:v1:bluemix:public:1734gd74"
         is_sensitive: false
         related_to: ["ibm_resource_instance.portworx"]
+      - name: "odf_is_ready"
+        type : string
+        description : "ID of odf instance"
+        example: "5938794176134383102"
+        is_sensitive: false
+        related_to: ["null_resource.enable_odf"]
     resources:
       - type : "ibm_database"
         name: "etcd"
@@ -321,6 +426,10 @@ root:
         name: "volume_attach"
         description : "Attach volume to each worker node"
         provider: "ibm"
+      - type : "null_resource"
+        name: "odf"
+        description : "Enables ODF on the cluster"
+        provider: "custom"
     datasources:
       - type : "ibm_resource_group"
         name: "group"
