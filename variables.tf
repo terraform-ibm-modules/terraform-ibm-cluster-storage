@@ -143,3 +143,40 @@ variable secret_type {
   type        = string
   default     = "k8s"
 }
+
+##############################################################################
+# Cloud Drive Variables
+##############################################################################
+variable cloud_drive {
+  description = "cloud drive support enabled"
+  type  = string
+  default = "Yes"
+}
+variable num_cloud_drives{
+  description = "No of drives to provisoned(max=3)"
+  type=number
+  validation {
+    condition=var.num_cloud_drives>0 && var.num_cloud_drives<4
+    error_message = "Number of drives should be maximum 3"
+  }
+}
+
+variable storageClassName {
+  description = "Name of the storage class"
+  type = string
+  default = "ibmc-vpc-block-10iops-tier"
+}
+
+variable cloud_drives_sizes {
+  description = "Size of the cloud drives(Should be entered in the form [100,0,0])"
+  type = list(number)
+  validation {
+    condition=length(var.cloud_drives_sizes)>0 && length(var.cloud_drives_sizes)<4
+    error_message = "Number of drives should be maximum 3"
+  }
+}
+
+variable max_storage_node_per_zone {
+  description = "number of worker nodes to be used as storage nodes"
+  type= number
+}

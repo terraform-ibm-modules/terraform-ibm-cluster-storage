@@ -59,10 +59,14 @@ module "portworx" {
 
 Run the following commands to execute the TF script (containing the modules to create/use ROKS and Portworx). Execution may take about 5-15 minutes:
 
+1)Export IC_API_KEY="XXXXX"
+2)Change the inputs.tfvars, If you don't really want to use the default values.
+3)Obtain the list of storageclasses after executing script_sc.sh and modify storageclass's default values in inputs.tfvars
+
 ```bash
 terraform init
-terraform plan
-terraform apply -auto-approve
+terraform plan -var-file=inputs.tfvars
+terraform apply -auto-approve -var-file=inputs.tfvars
 ```
 
 ## Clean up

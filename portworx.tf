@@ -47,12 +47,11 @@ resource "kubernetes_secret" "etcd" {
 ##################################
 resource "ibm_resource_instance" "portworx" {
   depends_on = [
-    ibm_container_storage_attachment.volume_attach,
     kubernetes_secret.etcd,
   ]
 
   name              = "${var.unique_id}-portworx-service"
-  service           = "portworx"
+  service           = "portworx-test"
   plan              = var.pwx_plan
   location          = var.region
   resource_group_id = data.ibm_resource_group.group.id
@@ -71,8 +70,16 @@ resource "ibm_resource_instance" "portworx" {
     )
     etcd_secret      = var.create_external_etcd ? var.etcd_secret_name : null
     internal_kvdb    = var.create_external_etcd ? "external" : "internal"
-    portworx_version = "Portworx: 2.6.2.1 , Stork: 2.6.0"
+    portworx_version = "Portworx: 2.9.0.1 , Stork: 2.8.2"
     secret_type      = var.secret_type
+
+    cloud_drive=var.cloud_drive
+    storageClassName=var.storageClassName
+    num_cloud_drives=var.num_cloud_drives
+    max_storage_node_per_zone=var.max_storage_node_per_zone
+    size=element(var.cloud_drives_sizes,0)
+    size1=(var.num_cloud_drives==2) ? element(var.cloud_drives_sizes,1): 0
+    size2=(var.num_cloud_drives==3) ? element(var.cloud_drives_sizes,2): 0
   }
 
   provisioner "local-exec" {
