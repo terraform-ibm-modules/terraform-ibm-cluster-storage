@@ -9,14 +9,14 @@ data ibm_container_vpc_cluster_worker worker {
   resource_group_id = data.ibm_resource_group.group.id
 }
 
-##############################################################################
-# Read subnet attached to each worker
-##############################################################################
-data ibm_is_subnet subnet {
-  count = length(data.ibm_container_vpc_cluster_worker.worker)
-
-  identifier = data.ibm_container_vpc_cluster_worker.worker[count.index].network_interfaces[0].subnet_id
-}
+###############################################################################
+## Read subnet attached to each worker
+###############################################################################
+#data ibm_is_subnet subnet {
+#  count = length(data.ibm_container_vpc_cluster_worker.worker)
+#
+#  identifier = data.ibm_container_vpc_cluster_worker.worker[count.index].network_interfaces[0].subnet_id
+#}
 
 ###############################################################################
 ## Create volume for each worker node
