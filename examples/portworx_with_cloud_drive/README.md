@@ -1,13 +1,23 @@
-# Terraform template to install Portworx on a VPC cluster
+# Terraform module to create storage classes for a cluster
 
-This Terraform template installs the **Portworx Service** on VPC cluster on an IBM Cloud.
+This module is used to create following storage solutions for IBM Cloud Kubernetes Service clusters
 
+* File Storage
+* Block storage
+* Object storage
+* Software Defined Storage(SDS) with portworx on VPC cluster
 
-### Provisioning the Portworx on ROKS cluster
+## Compatibility
+
+This module is meant for use with Terraform >= 0.13.
+
+## Usage
+
+Example to create Software Defined Storage(SDS) with portworx on VPC cluster
 
 ```hcl
 module "portworx" {
-  source = "./../.."
+  source = "../../modules/portworx_with_cloud_drive"
 
   ibmcloud_api_key = var.ibmcloud_api_key
   region           = var.region
@@ -15,6 +25,11 @@ module "portworx" {
   cluster          = var.cluster
   unique_id        = var.unique_id
   kube_config_path = data.ibm_container_cluster_config.cluster_config.config_file_path
+
+  // cloud drives parameters
+  max_storage_node_per_zone=var.max_storage_node_per_zone
+  num_cloud_drives=var.num_cloud_drives
+  cloud_drives_sizes=var.cloud_drives_sizes
 
   // These credentials have been hard-coded because the 'Databases for etcd' service instance is not configured to have a publicly accessible endpoint by default.
   // You may override these for additional security.
@@ -24,6 +39,7 @@ module "portworx" {
   etcd_secret_name     = var.etcd_secret_name
 
 }
+
 ```
 
 ## Input Variables
@@ -32,9 +48,6 @@ module "portworx" {
 | ------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | -------- |
 | `ibmcloud_api_key`             | This requires an ibmcloud api key found here: `https://cloud.ibm.com/iam/apikeys`    |         | Yes       |
 | `kube_config_path`             | This is the path to the kube config                                          |  `.kube/config` | Yes       |
-| `install_storage`              | If set to `false` does not install storage and attach the volumes to the worker nodes. Enabled by default  |  `true` | Yes      |
-| `capacity`             | Sets the capacity of the volume in GBs. |   `200`    | Yes      |
-| `profile`              | The is the storage profile used for creating storage. If this is set to a custom profile, you must update the `storage_iops` |   `10iops-tier`    | Yes      |
 | `resource_group_name`          | The resource group name where the cluster is housed                                  |         | Yes      |
 | `region`                       | The region that resources will be provisioned in. Ex: `"us-east"` `"us-south"` etc.  |         | Yes      |
 | `cluster`                   | The name of the cluster created |  | Yes       |
@@ -53,17 +66,88 @@ module "portworx" {
 | `pwx_plan`                | Portworx plan type                        | `px-enterprise` | Yes |
 | `cluster_name`             | Name of the cluster  | `pwx`    | Yes |
 | `secret_type`             | secret type  | `k8s`    | no |
+| `cloud_drive`             | If cloud drive support needs to be enabled, this should be set to true | Yes  | Yes |
+| `num_cloud_drives`        | No of cloud drives or disks to be attached to each of the workers in the cluster where Portworx is going to be installed(maximum value is 3) | 1  | Yes |
+| `storageClassName`        | Storage Class that will be used to provision the cloud drives | `ibmc-vpc-block-10iops-tier`  | Yes |
+| `cloud_drives_sizes`      | Sizes of the cloud drives that are going to be provisioned, no of cloud drive sizes will vary based on the no of cloud drives | `[100,0,0]`  | Yes |
+| `max_storage_node_per_zone` | maximum no of storage nodes where the disks should be provisioned automatically within a zone, remaining nodes will be storage less nodes for Portworx | 1  | Yes |
 
+
+## Requirements
+
+### Terraform plugins
+
+- [Terraform](https://www.terraform.io/downloads.html) >= 0.13
+- [terraform-provider-ibm](https://github.com/IBM-Cloud/terraform-provider-ibm)
+
+## Install
+
+### Terraform
+
+Be sure you have the correct Terraform version (>= 0.13), you can choose the binary here:
+- https://releases.hashicorp.com/terraform/
+
+### Terraform plugins
+
+Be sure you have the compiled plugins on $HOME/.terraform.d/plugins/
+
+- [terraform-provider-ibm](https://github.com/IBM-Cloud/terraform-provider-ibm)
+
+### Pre-commit Hooks
+
+Run the following command to execute the pre-commit hooks defined in .pre-commit-config.yaml file
+
+pre-commit run -a
+
+We can install pre-coomit tool using
+
+pip install pre-commit
+
+      or
+
+pip3 install pre-commit
+
+### Detect Secret hook
+
+Used to detect secrets within a code base.
+
+To create a secret baseline file run following command
+
+```
+detect-secrets scan --update .secrets.baseline
+```
+
+While running the pre-commit hook, if you encounter an error like
+
+```
+WARNING: You are running an outdated version of detect-secrets.
+Your version: 0.13.1+ibm.27.dss
+Latest version: 0.13.1+ibm.46.dss
+See upgrade guide at https://ibm.biz/detect-secrets-how-to-upgrade
+```
+
+run below command
+
+```
+pre-commit autoupdate
+```
+which upgrades all the pre-commit hooks present in .pre-commit.yaml file.
 
 ## Executing the Terraform Script
 
 Run the following commands to execute the TF script (containing the modules to create/use ROKS and Portworx). Execution may take about 5-15 minutes:
 
+Note:
+- Export IC_API_KEY="XXXXX"
+- Change the inputs.tfvars, If you don't really want to use the default values.
+- Obtain the list of storageclasses after executing `script_sc.sh` and modify storageclass's default values in inputs.tfvars
+
 ```bash
 terraform init
-terraform plan
-terraform apply -auto-approve
-```
+terraform plan -var-file=inputs.tfvars
+terraform apply -auto-approve -var-file=inputs.tfvars
+
+All optional parameters by default will be set to null in respective example's varaible.tf file. If user wants to configure any optional paramter he has overwrite the default value.
 
 ## Clean up
 
@@ -72,3 +156,7 @@ To remove Portworx and Storage from a cluster, execute the following command:
 ```bash
 terraform destroy
 ```
+
+## Note
+
+All optional fields should be given value `null` in respective resource varaible.tf file. User can configure the same by overwriting with appropriate values.

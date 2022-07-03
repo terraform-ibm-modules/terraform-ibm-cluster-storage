@@ -3,14 +3,9 @@
 ##############################################################################
 
 variable "install_storage" {
+  type        = bool
   default     = true
   description = "If set to false does not install storage and attach the volumes to the worker nodes. Enabled by default"
-}
-
-variable unique_id {
-  description = "unique identifiers for all created resources"
-  type        = string
-  default     = "pwx"
 }
 
 variable ibmcloud_api_key {
@@ -18,33 +13,24 @@ variable ibmcloud_api_key {
   type        = string
 }
 
+variable unique_id {
+  description = "Unique identifiers for all created resources"
+  type        = string
+}
+
 variable cluster {
-  description = "name of existing kubernetes cluster"
+  description = "Name of existing roks cluster"
   type        = string
 }
 
-variable resource_group_name {
-  description = "resource group of existing kubernetes cluster"
+variable "kube_config_path" {
+  description = "Path to the k8s config file: ex `~/.kube/config`"
   type        = string
-  default     = "Default"
 }
 
-##############################################################################
-
-##############################################################################
-# Block Storage Variables
-##############################################################################
-
-variable capacity {
-  description = "Capacity for all block storage volumes provisioned in gigabytes"
-  type        = number
-  default     = 100
-}
-
-variable profile {
-  description = "The profile to use for this volume."
+variable resource_group {
+  description = "Resource group of existing cluster"
   type        = string
-  default     = "10iops-tier"
 }
 
 ##############################################################################
@@ -54,19 +40,12 @@ variable profile {
 ##############################################################################
 variable "create_external_etcd" {
   type        = bool
-  default     = true
+  default     = false
   description = "Do you want to create an external_etcd? `True` or `False`"
 }
 
 variable "region" {
   description = "The region Portworx will be installed in: us-south, us-east, eu-gb, eu-de, jp-tok, au-syd, etc."
-  default     = "us-south"
-}
-
-variable "kube_config_path" {
-  description = "Path to the k8s config file: ex `~/.kube`"
-  type        = string
-  default     = "/tmp"
 }
 
 # These credentials have been hard-coded because the 'Databases for etcd' service instance is not configured to have a publicly accessible endpoint by default.
@@ -124,7 +103,7 @@ variable db_version {
 }
 
 variable kubernetes_secret_namespace {
-  description = "Name os the namespace"
+  description = "Name of the namespace"
   type        = string
   default     = "kube-system"
 }
@@ -145,4 +124,41 @@ variable secret_type {
   description = "secret type"
   type        = string
   default     = "k8s"
+}
+
+##############################################################################
+# Cloud Drive Variables
+##############################################################################
+variable cloud_drive {
+  description = "cloud drive support enabled"
+  type  = string
+  default = "Yes"
+}
+variable num_cloud_drives{
+  description = "No of drives to provisoned(max=3)"
+  type=number
+  validation {
+    condition=var.num_cloud_drives>0 && var.num_cloud_drives<4
+    error_message = "Maximum number of cloud drives that can be provisioned is 3"
+  }
+}
+
+variable storageClassName {
+  description = "Name of the storage class that will be used to provision cloud drives"
+  type = string
+  default = "ibmc-vpc-block-10iops-tier"
+}
+
+variable cloud_drives_sizes {
+  description = "Size of the cloud drives(Should be entered in the form [100,0,0])"
+  type = list(number)
+  validation {
+    condition=length(var.cloud_drives_sizes)>0 && length(var.cloud_drives_sizes)<4
+    error_message = "Maximum number of cloud drives that can be provisioned is 3"
+  }
+}
+
+variable max_storage_node_per_zone {
+  description = "number of worker nodes to be used as storage nodes"
+  type= number
 }
