@@ -1,12 +1,3 @@
-# Terraform module to create storage classes for a cluster
-
-This module is used to create following storage solutions for IBM Cloud Kubernetes Service clusters
-
-* File Storage
-* Block storage
-* Object storage
-* Software Defined Storage(SDS) with portworx on VPC cluster
-
 #About Portworx Cloud Drive Support
 
 - In cloud environments, Portworx can dynamically create disks based on an input disk template whenever a new instance spins up and use those disks for the Portworx cluster.

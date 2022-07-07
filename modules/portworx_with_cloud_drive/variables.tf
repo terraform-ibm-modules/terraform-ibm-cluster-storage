@@ -138,6 +138,7 @@ variable cloud_drive {
 variable num_cloud_drives{
   description = "No of drives to provisoned(max=3)"
   type=number
+  default = 1
   validation {
     condition=var.num_cloud_drives>0 && var.num_cloud_drives<4
     error_message = "Maximum number of cloud drives that can be provisioned is 3"
@@ -153,6 +154,7 @@ variable storageClassName {
 variable cloud_drives_sizes {
   description = "Size of the cloud drives(Should be entered in the form [100,0,0])"
   type = list(number)
+  default = [100,0,0]
   validation {
     condition=length(var.cloud_drives_sizes)>0 && length(var.cloud_drives_sizes)<4
     error_message = "Maximum number of cloud drives that can be provisioned is 3"
@@ -162,4 +164,5 @@ variable cloud_drives_sizes {
 variable max_storage_node_per_zone {
   description = "number of worker nodes to be used as storage nodes"
   type= number
+  default = 1
 }
