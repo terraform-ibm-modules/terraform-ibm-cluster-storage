@@ -24,7 +24,7 @@ variable cluster {
 }
 
 variable "kube_config_path" {
-  description = "Path to the k8s config file: ex `~/.kube/config`"
+  description = "Path to store k8s config file: ex `~/.kube/config`"
   type        = string
 }
 

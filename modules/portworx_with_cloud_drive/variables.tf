@@ -24,13 +24,14 @@ variable cluster {
 }
 
 variable "kube_config_path" {
-  description = "Path to the k8s config file: ex `~/.kube/config`"
+  description = "Path to store k8s config file: ex `~/.kube/config`"
   type        = string
 }
 
 variable resource_group {
   description = "Resource group of existing cluster"
   type        = string
+  default = "Default"
 }
 
 ##############################################################################
@@ -40,7 +41,7 @@ variable resource_group {
 ##############################################################################
 variable "create_external_etcd" {
   type        = bool
-  default     = false
+  default     = true
   description = "Do you want to create an external_etcd? `True` or `False`"
 }
 

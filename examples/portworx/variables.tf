@@ -64,7 +64,7 @@ variable "region" {
 }
 
 variable "kube_config_path" {
-  description = "Path to the k8s config file: ex `~/.kube`"
+  description = "Path to store k8s config file: ex `~/.kube`"
   type        = string
   default     = "/tmp"
 }
