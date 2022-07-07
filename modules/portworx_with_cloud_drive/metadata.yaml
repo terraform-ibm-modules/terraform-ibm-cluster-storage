@@ -4,14 +4,14 @@ name: "cluster-storage"
 namespace: "terraform-ibm-modules"
 version: "1.0.0"
 providers: ["ibm"]
-provider_logo_url: "/images/providers/portworx_with_cloud_drive.jpg"
+provider_logo_url: "/images/providers/portworx.jpg"
 description: "Terraform module is used to create storage solutions like protworx for IBM Cloud Kubernetes Service clusters"
 source: "https://github.com/terraform-ibm-modules/terraform-ibm-cluster-storage"
 owner: "ibmtfprovider"
 published_at: "2021-12-02T10:34:28.911362Z"
 registry: "https://registry.terraform.io/modules/terraform-ibm-modules/cluster-storage/ibm/latest"
-alias: "portworx_with_cloud_drive"
-tags: ["portworx_with_cloud_drive","storage","cluster","cluster-storage"]
+alias: "portworx"
+tags: ["portworx","storage","cluster","cluster-storage"]
 ###################################
 # Root module
 ###################################
@@ -46,7 +46,7 @@ root:
         description: "Get the ibmcloud api key from https://cloud.ibm.com/iam/apikeys"
         example: "wOuIKuDW8p-n94__U"
         is_sensitive: true
-        related_to: ["ibm_resource_instance.portworx_with_cloud_drive"]
+        related_to: ["ibm_resource_instance.portworx"]
         is_nullable: false
         is_force_new: false
         is_provision_controller: false
@@ -58,7 +58,7 @@ root:
         description: "unique identifiers for all created resources"
         example: "pwx-instance"
         is_sensitive: false
-        related_to: ["ibm_database.etcd","ibm_resource_instance.portworx_with_cloud_drive"]
+        related_to: ["ibm_database.etcd","ibm_resource_instance.portworx"]
         is_nullable: false
         is_force_new: false
         is_provision_controller: false
@@ -80,7 +80,7 @@ root:
         description: "Path to the k8s config file: ex `~/.kube/config"
         example: "/tmp"
         is_sensitive: false
-        related_to: ["ibm_resource_instance.portworx_with_cloud_drive"]
+        related_to: ["ibm_resource_instance.portworx"]
         is_nullable: false
         is_force_new: false
         is_provision_controller: false
@@ -125,7 +125,7 @@ root:
         description: "Controls th ecreation of database instance"
         example: false
         is_sensitive: false
-        related_to: ["ibm_database.etcd","ibm_resource_instance.portworx_with_cloud_drive"]
+        related_to: ["ibm_database.etcd","ibm_resource_instance.portworx"]
         is_nullable: false
         is_force_new: true
         is_provision_controller: true
@@ -136,7 +136,7 @@ root:
         description: "The region Portworx will be installed in: us-south, us-east, eu-gb, eu-de, jp-tok, au-syd, etc."
         example: "us-south"
         is_sensitive: false
-        related_to: ["ibm_database.etcd","ibm_resource_instance.portworx_with_cloud_drive"]
+        related_to: ["ibm_database.etcd","ibm_resource_instance.portworx"]
         is_nullable: true
         is_force_new: true
         is_provision_controller: false
@@ -264,7 +264,7 @@ root:
         description: "ETCD secret name."
         example: "px-enterprise"
         is_sensitive: false
-        related_to: ["ibm_resource_instance.portworx_with_cloud_drive"]
+        related_to: ["ibm_resource_instance.portworx"]
         is_nullable: false
         is_force_new: false
         is_provision_controller: false
@@ -276,7 +276,7 @@ root:
         description: "Name of the cluster."
         example: "t-cluster"
         is_sensitive: false
-        related_to: ["ibm_resource_instance.portworx_with_cloud_drive"]
+        related_to: ["ibm_resource_instance.portworx"]
         is_nullable: false
         is_force_new: false
         is_provision_controller: false
@@ -288,7 +288,7 @@ root:
         description: "Type of secret"
         example: "k8s"
         is_sensitive: false
-        related_to: ["ibm_resource_instance.portworx_with_cloud_drive"]
+        related_to: ["ibm_resource_instance.portworx"]
         is_nullable: false
         is_force_new: false
         is_provision_controller: false
@@ -296,10 +296,10 @@ root:
     outputs:
       - name: "portworx_is_ready"
         type : string
-        description : "ID of portworx_with_cloud_drive instance"
+        description : "ID of portworx instance"
         example: "crn:v1:bluemix:public:1734gd74"
         is_sensitive: false
-        related_to: ["ibm_resource_instance.portworx_with_cloud_drive"]
+        related_to: ["ibm_resource_instance.portworx"]
     resources:
       - type : "ibm_database"
         name: "etcd"
@@ -310,8 +310,8 @@ root:
         description : "Used to attach a key to logging instance"
         provider: "kubernetes"
       - type : "ibm_resource_instance"
-        name: "portworx_with_cloud_drive"
-        description : "Used to create portworx_with_cloud_drive instance"
+        name: "portworx"
+        description : "Used to create portworx instance"
         provider: "ibm"
       - type : "ibm_is_volume"
         name: "volume"

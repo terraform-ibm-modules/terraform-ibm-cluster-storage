@@ -10,7 +10,7 @@ data ibm_container_vpc_cluster_worker worker {
 }
 
 ###############################################################################
-## Read subnet attached to each worker
+# Read subnet attached to each worker
 ###############################################################################
 data ibm_is_subnet subnet {
   count = length(data.ibm_container_vpc_cluster_worker.worker)
@@ -19,7 +19,7 @@ data ibm_is_subnet subnet {
 }
 
 ###############################################################################
-## Create volume for each worker node
+# Create volume for each worker node
 ###############################################################################
 #
 resource ibm_is_volume volume {
@@ -38,7 +38,7 @@ resource ibm_is_volume volume {
 }
 
 ###############################################################################
-## Attach volume to each worker node
+# Attach volume to each worker node
 ###############################################################################
 resource "ibm_container_storage_attachment" "volume_attach" {
   count   = var.install_storage ? length(data.ibm_container_vpc_cluster_worker.worker) : 0

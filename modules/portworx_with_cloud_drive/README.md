@@ -6,6 +6,14 @@ This module is used to create following storage solutions for IBM Cloud Kubernet
 * Block storage
 * Object storage
 * Software Defined Storage(SDS) with portworx on VPC cluster
+#About Portworx Cloud Drive Support
+
+- In cloud environments, Portworx can dynamically create disks based on an input disk template whenever a new instance spins up and use those disks for the Portworx cluster.
+- Portworx fingerprints the disks and attaches them to an instance in the cluster. In this way an ephemeral instance gets its own identity.
+
+Why would I need this?
+- Users don’t have to manage the lifecycle of disks. Instead, they just have to provide disks specs and Portworx manages the disk lifecycle.
+- When an instance terminates, the auto scaling group/user will add a new instance to the cluster. Portworx gracefully handles this scenario by re-attaching the disks to it and give a new instance the old identity. This ensures that the instance’s data is retained with zero storage downtime.
 
 ## Compatibility
 
