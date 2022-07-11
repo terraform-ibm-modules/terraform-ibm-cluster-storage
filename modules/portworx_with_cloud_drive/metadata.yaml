@@ -1,0 +1,348 @@
+---
+id: "terraform-ibm-modules/cluster-storage/ibm/1.0.0"
+name: "cluster-storage"
+namespace: "terraform-ibm-modules"
+version: "1.0.0"
+providers: ["ibm"]
+provider_logo_url: "/images/providers/portworx.jpg"
+description: "Terraform module is used to create storage solutions like protworx for IBM Cloud Kubernetes Service clusters"
+source: "https://github.com/terraform-ibm-modules/terraform-ibm-cluster-storage"
+owner: "ibmtfprovider"
+published_at: "2021-12-02T10:34:28.911362Z"
+registry: "https://registry.terraform.io/modules/terraform-ibm-modules/cluster-storage/ibm/latest"
+alias: "portworx"
+tags: ["portworx","storage","cluster","cluster-storage"]
+###################################
+# Root module
+###################################
+root:
+  - path: ""
+    name: "cluster-storage"
+    provider_dependencies:
+      - name: "ibm"
+        namespace: "IBM-Cloud"
+        source: "IBM-Cloud/ibm"
+        version: ""
+      - name: "kubernetes"
+        namespace: ""
+        source: ""
+        version: ""
+    inputs:
+      - name: "install_storage"
+        type: bool
+        is_required: false
+        default_value: true
+        description: "If set to false does not install storage and attach the volumes to the worker nodes. Enabled by default"
+        example: true
+        is_sensitive: false
+        related_to: [""ibm_is_volume.volume","ibm_container_storage_attachment.volume_attach"]
+        is_nullable: false
+        is_force_new: true
+        is_provision_controller: true
+        is_count_controller: true
+      - name: "ibmcloud_api_key"
+        type : string
+        is_required: true
+        description: "Get the ibmcloud api key from https://cloud.ibm.com/iam/apikeys"
+        example: "wOuIKuDW8p-n94__U"
+        is_sensitive: true
+        related_to: ["ibm_resource_instance.portworx"]
+        is_nullable: false
+        is_force_new: false
+        is_provision_controller: false
+        is_count_controller: false
+      - name: "unique_id"
+        type : string
+        is_required: false
+        default_value: pwx
+        description: "unique identifiers for all created resources"
+        example: "pwx-instance"
+        is_sensitive: false
+        related_to: ["ibm_database.etcd","ibm_resource_instance.portworx"]
+        is_nullable: false
+        is_force_new: false
+        is_provision_controller: false
+        is_count_controller: false
+      - name: "cluster"
+        type : string
+        is_required: true
+        description: "Name or ID of existing roks cluster"
+        example: "mycluster2-us-east-2-bx2.4x16"
+        is_sensitive: false
+        related_to: ["ibm_container_vpc_cluster.cluster","ibm_container_cluster_config.cluster"]
+        is_nullable: false
+        is_force_new: false
+        is_provision_controller: false
+        is_count_controller: false
+      - name: "kube_config_path"
+        type : string
+        is_required: false
+        description: "Path to the k8s config file: ex `~/.kube/config"
+        example: "/tmp"
+        is_sensitive: false
+        related_to: ["ibm_resource_instance.portworx"]
+        is_nullable: false
+        is_force_new: false
+        is_provision_controller: false
+        is_count_controller: false
+      - name: "resource_group"
+        type : string
+        is_required: true
+        description: "Name of the resource group"
+        example: "default"
+        is_sensitive: false
+        related_to: ["data.ibm_resource_group.group"]
+        is_nullable: false
+        is_force_new: false
+        is_provision_controller: false
+        is_count_controller: false
+      - name: "capacity"
+        type : number
+        is_required: false
+        description: "Capacity for all block storage volumes provisioned in gigabytes"
+        example: 100
+        is_sensitive: false
+        related_to: ["ibm_is_volume.volume"]
+        is_nullable: true
+        is_force_new: false
+        is_provision_controller: false
+        is_count_controller: false
+      - name: "profile"
+        type : string
+        is_required: false
+        description: "The profile to use for this volume."
+        example: "10iops-tier"
+        is_sensitive: false
+        related_to: ["ibm_is_volume.volume"]
+        is_nullable: true
+        is_force_new: false
+        is_provision_controller: false
+        is_count_controller: false
+      - name: "create_external_etcd"
+        type : bool
+        is_required: false
+        default_value: false
+        description: "Controls th ecreation of database instance"
+        example: false
+        is_sensitive: false
+        related_to: ["ibm_database.etcd","ibm_resource_instance.portworx"]
+        is_nullable: false
+        is_force_new: true
+        is_provision_controller: true
+        is_count_controller: true
+      - name: "region"
+        type : string
+        is_required: true
+        description: "The region Portworx will be installed in: us-south, us-east, eu-gb, eu-de, jp-tok, au-syd, etc."
+        example: "us-south"
+        is_sensitive: false
+        related_to: ["ibm_database.etcd","ibm_resource_instance.portworx"]
+        is_nullable: true
+        is_force_new: true
+        is_provision_controller: false
+        is_count_controller: false
+      - name: "etcd_username"
+        type : string
+        is_required: false
+        description: "ETCD username."
+        example: "portworxuser"
+        is_sensitive: false
+        related_to: ["ibm_database.etcd"]
+        is_nullable: true
+        is_force_new: false
+        is_provision_controller: false
+        is_count_controller: false
+      - name: "etcd_password"
+        type : string
+        is_required: false
+        description: "ETCD password"
+        example: "etcdpassword123"
+        is_sensitive: false
+        related_to: ["ibm_database.etcd"]
+        is_nullable: true
+        is_force_new: false
+        is_provision_controller: false
+        is_count_controller: false
+      - name: "etcd_secret_name"
+        type : string
+        is_required: false
+        description: "ETCD secret name."
+        example: "px-etcd-cert"
+        is_sensitive: false
+        related_to: ["ibm_database.etcd"]
+        is_nullable: false
+        is_force_new: false
+        is_provision_controller: false
+        is_count_controller: false
+      - name: "cpu_allocation_count"
+        type : number
+        is_required: false
+        default_value: 9
+        description: "Enables and allocates the number of specified dedicated cores to your deployment."
+        example: 9
+        is_sensitive: false
+        related_to: ["ibm_database.etcd"]
+        is_nullable: true
+        is_force_new: false
+        is_provision_controller: false
+        is_count_controller: false
+      - name: "disk_allocation_mb"
+        type : number
+        is_required: false
+        default_value: 393216
+        description: "The amount of disk space for the database, split across all members.."
+        example: 393216
+        is_sensitive: false
+        related_to: ["ibm_database.etcd"]
+        is_nullable: true
+        is_force_new: false
+        is_provision_controller: false
+        is_count_controller: false
+      - name: "memory_allocation_mb"
+        type : string
+        is_required: false
+        default_value: 24576
+        description: "The amount of memory in megabytes for the database, split across all members."
+        example: 24576
+        is_sensitive: false
+        related_to: ["ibm_database.etcd"]
+        is_nullable: true
+        is_force_new: false
+        is_provision_controller: false
+        is_count_controller: false
+      - name: "db_plan"
+        type : string
+        is_required: true
+        description: "The name of the service plan that you choose for db instance."
+        example: "standard"
+        is_sensitive: false
+        related_to: ["ibm_database.etcd"]
+        is_nullable: false
+        is_force_new: false
+        is_provision_controller: false
+        is_count_controller: false
+      - name: "service_endpoints"
+        type : string
+        is_required: false
+        default_value: "public"
+        description: "Specify whether you want to enable the public, private, or both service endpoints."
+        allowed_values: ["public","private","public-and-private"]
+        example: "public"
+        is_sensitive: false
+        related_to: ["ibm_database.etcd"]
+        is_nullable: true
+        is_force_new: false
+        is_provision_controller: false
+        is_count_controller: false
+      - name: "db_version"
+        type : string
+        is_required: false
+        default_value: "3.3"
+        description: "The version of the database to be provisioned."
+        example: "3.3"
+        is_sensitive: false
+        related_to: ["ibm_database.etcd"]
+        is_nullable: true
+        is_force_new: false
+        is_provision_controller: false
+        is_count_controller: false
+      - name: "kubernetes_secret_namespace"
+        type : string
+        is_required: true
+        description: "Name of the namespace"
+        example: "kube-system"
+        is_sensitive: false
+        related_to: ["kubernetes_secret.etcd"]
+        is_nullable: true
+        is_force_new: false
+        is_provision_controller: false
+        is_count_controller: false
+      - name: "pwx_plan"
+        type : string
+        is_required: true
+        default_value: 24576
+        description: "ETCD secret name."
+        example: "px-enterprise"
+        is_sensitive: false
+        related_to: ["ibm_resource_instance.portworx"]
+        is_nullable: false
+        is_force_new: false
+        is_provision_controller: false
+        is_count_controller: false
+      - name: "cluster_name"
+        type : string
+        is_required: true
+        default_value: "pwx"
+        description: "Name of the cluster."
+        example: "t-cluster"
+        is_sensitive: false
+        related_to: ["ibm_resource_instance.portworx"]
+        is_nullable: false
+        is_force_new: false
+        is_provision_controller: false
+        is_count_controller: false
+      - name: "secret_type"
+        type : string
+        is_required: false
+        default_value: "k8s"
+        description: "Type of secret"
+        example: "k8s"
+        is_sensitive: false
+        related_to: ["ibm_resource_instance.portworx"]
+        is_nullable: false
+        is_force_new: false
+        is_provision_controller: false
+        is_count_controller: false
+    outputs:
+      - name: "portworx_is_ready"
+        type : string
+        description : "ID of portworx instance"
+        example: "crn:v1:bluemix:public:1734gd74"
+        is_sensitive: false
+        related_to: ["ibm_resource_instance.portworx"]
+    resources:
+      - type : "ibm_database"
+        name: "etcd"
+        description : "Used to provision etcd database instance"
+        provider: "ibm"
+      - type : "kubernetes_secret"
+        name: "etcd"
+        description : "Used to attach a key to logging instance"
+        provider: "kubernetes"
+      - type : "ibm_resource_instance"
+        name: "portworx"
+        description : "Used to create portworx instance"
+        provider: "ibm"
+      - type : "ibm_is_volume"
+        name: "volume"
+        description : "Used to create volume for each worker node"
+        provider: "ibm"
+      - type : "ibm_container_storage_attachment"
+        name: "volume_attach"
+        description : "Attach volume to each worker node"
+        provider: "ibm"
+    datasources:
+      - type : "ibm_resource_group"
+        name: "group"
+        description : "Used to create kubernetes secret"
+        provider: "ibm"
+      - type : "ibm_container_vpc_cluster"
+        name: "cluster"
+        description : "Used to read existing vpc cluster"
+        provider: "ibm"
+      - type : "ibm_container_cluster_config"
+        name: "cluster"
+        description : "Used to download existing cluster config"
+        provider: "ibm"
+      - type : "ibm_resource_group"
+        name: "group"
+        description : "Used to read existing resurce group info"
+        provider: "ibm"
+      - type : "ibm_container_vpc_cluster_worker"
+        name: "worker"
+        description : "Used to read vpc cluster worker nodes"
+        provider: "ibm"
+      - type : "ibm_is_subnet"
+        name: "subnet"
+        description : "Used to read subnet information"
+        provider: "ibm"

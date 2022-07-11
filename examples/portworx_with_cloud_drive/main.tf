@@ -34,10 +34,10 @@ data "ibm_container_cluster_config" "cluster_config" {
 }
 
 ###################################################################
-# Create portworx instance
+# Create portworx_with_cloud_drive instance
 ###################################################################
 module "portworx" {
-  source = "../../modules/portworx"
+  source = "../../modules/portworx_with_cloud_drive"
 
   ibmcloud_api_key = var.ibmcloud_api_key
   region           = var.region
@@ -46,14 +46,16 @@ module "portworx" {
   unique_id        = var.unique_id
   kube_config_path = data.ibm_container_cluster_config.cluster_config.config_file_path
 
-
+  // Adding cloud drives parameters
+  max_storage_node_per_zone = var.max_storage_node_per_zone
+  num_cloud_drives          = var.num_cloud_drives
+  cloud_drives_sizes        = var.cloud_drives_sizes
   // These credentials have been hard-coded because the 'Databases for etcd' service instance is not configured to have a publicly accessible endpoint by default.
   // You may override these for additional security.
   create_external_etcd        = var.create_external_etcd
   etcd_username               = var.etcd_username
   etcd_password               = var.etcd_password
   etcd_secret_name            = var.etcd_secret_name
-  profile                     = var.profile
   cpu_allocation_count        = var.cpu_allocation_count
   disk_allocation_mb          = var.disk_allocation_mb
   memory_allocation_mb        = var.memory_allocation_mb
@@ -65,3 +67,5 @@ module "portworx" {
   cluster_name                = var.cluster_name
   secret_type                 = var.secret_type
 }
+
+
