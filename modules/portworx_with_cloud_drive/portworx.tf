@@ -50,7 +50,7 @@ resource "ibm_resource_instance" "portworx" {
     kubernetes_secret.etcd,
   ]
 
-  name              = "${var.unique_id}-portworx-service"
+  name = "${var.unique_id}-portworx-service"
   //Todo: Change this service name once it is pushed to prod
   service           = "portworx-test"
   plan              = var.pwx_plan
@@ -74,13 +74,13 @@ resource "ibm_resource_instance" "portworx" {
     portworx_version = "Portworx: 2.9.0.1 , Stork: 2.8.2"
     secret_type      = var.secret_type
 
-    cloud_drive=var.cloud_drive
-    storageClassName=var.storageClassName
-    num_cloud_drives=var.num_cloud_drives
-    max_storage_node_per_zone=var.max_storage_node_per_zone
-    size=element(var.cloud_drives_sizes,0)
-    size1=(var.num_cloud_drives==2) ? element(var.cloud_drives_sizes,1): 0
-    size2=(var.num_cloud_drives==3) ? element(var.cloud_drives_sizes,2): 0
+    cloud_drive               = var.cloud_drive
+    storageClassName          = var.storageClassName
+    num_cloud_drives          = var.num_cloud_drives
+    max_storage_node_per_zone = var.max_storage_node_per_zone
+    size                      = element(var.cloud_drives_sizes, 0)
+    size1                     = (var.num_cloud_drives == 2) ? element(var.cloud_drives_sizes, 1) : 0
+    size2                     = (var.num_cloud_drives == 3) ? element(var.cloud_drives_sizes, 2) : 0
   }
 
   provisioner "local-exec" {
