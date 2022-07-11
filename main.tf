@@ -5,6 +5,7 @@
 
 data ibm_resource_group group {
   name = var.resource_group
+  ibmcloud_api_key = "318ec6bb2a44406a8f91bf57df1fa0d7"
 }
 
 data ibm_container_vpc_cluster cluster {
