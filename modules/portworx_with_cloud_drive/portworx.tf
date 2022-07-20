@@ -51,8 +51,7 @@ resource "ibm_resource_instance" "portworx" {
   ]
 
   name = "${var.unique_id}-portworx-service"
-  //Todo: Change this service name once it is pushed to prod
-  service           = "portworx-test"
+  service           = "portworx"
   plan              = var.pwx_plan
   location          = var.region
   resource_group_id = data.ibm_resource_group.group.id

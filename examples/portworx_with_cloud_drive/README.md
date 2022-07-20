@@ -146,6 +146,7 @@ Note:
 terraform init
 terraform plan -var-file=inputs.tfvars
 terraform apply -auto-approve -var-file=inputs.tfvars
+```
 
 All optional parameters by default will be set to null in respective example's varaible.tf file. If user wants to configure any optional paramter he has overwrite the default value.
 
@@ -153,8 +154,10 @@ All optional parameters by default will be set to null in respective example's v
 
 To remove Portworx and Storage from a cluster, execute the following command:
 
+Note: Please execute the below command from the examples directory
+
 ```bash
-terraform destroy
+terraform destroy -var-file=inputs.tfvars
 ```
 
 ## Note

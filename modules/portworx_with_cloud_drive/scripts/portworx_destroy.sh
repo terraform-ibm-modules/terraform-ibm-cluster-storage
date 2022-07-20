@@ -28,7 +28,7 @@ if [ "$VERSION" == "" ]; then
 fi
 
 echo "Uninstalling portworx from cluster ..."
-bash `pwd`/scripts/px-wipe.sh -f
+bash `pwd`/px-wipe.sh -f
 
 echo "Listing releases ... "
 $CMD ls --namespace default --all
