@@ -71,7 +71,7 @@ module "portworx" {
 | `secret_type`             | secret type  | `k8s`    | no |
 | `cloud_drive`             | If cloud drive support needs to be enabled, this should be set to true | Yes  | Yes |
 | `num_cloud_drives`        | No of cloud drives or disks to be attached to each of the workers in the cluster where Portworx is going to be installed(maximum value is 3) | 1  | Yes |
-| `storageClassName`        | Storage Class that will be used to provision the cloud drives | `ibmc-vpc-block-10iops-tier`  | Yes |
+| `storage_class`        | List of Storage Classes that will be used to provision the cloud drives | `["ibmc-vpc-block-10iops-tier","",""]`  | Yes |
 | `cloud_drives_sizes`      | Sizes of the cloud drives that are going to be provisioned, no of cloud drive sizes will vary based on the no of cloud drives | `[100,0,0]`  | Yes |
 | `max_storage_node_per_zone` | maximum no of storage nodes where the disks should be provisioned automatically within a zone, remaining nodes will be storage less nodes for Portworx | 1  | Yes |
 
