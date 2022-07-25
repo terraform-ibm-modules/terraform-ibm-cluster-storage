@@ -30,7 +30,7 @@ module "portworx" {
   // You may override these for additional security.
   create_external_etcd = var.create_external_etcd
   etcd_username        = var.etcd_username
-  etcd_password        = var.etcd_password
+  etcd_password        = var.etcd_password  #pragma: allowlist secret
   etcd_secret_name     = var.etcd_secret_name
 
 }
