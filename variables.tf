@@ -24,8 +24,9 @@ variable "cluster" {
 }
 
 variable "kube_config_path" {
-  description = "Path to the k8s config file: ex `~/.kube/config`"
+  description = "Directory to store the kubeconfig file. If running on Schematics, use `/tmp/.schematics/.kube/config`"
   type        = string
+  default     = "./.kube/config"
 }
 
 variable "resource_group" {

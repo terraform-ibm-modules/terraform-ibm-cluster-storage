@@ -63,15 +63,15 @@ variable "clusterEncryption" {
 #################################
 
 variable "region" {
-  description = "The region Portworx will be installed in: us-south, us-east, eu-gb, eu-de, jp-tok, au-syd, etc."
+  description = "The region of the cluster ODF will be installed on: us-south, us-east, eu-gb, eu-de, jp-tok, au-syd, etc."
   default     = "us-south"
 }
 
-variable "unique_id" {
-  description = "unique identifiers for all created resources"
-  type        = string
-  default     = "pwx"
-}
+#variable "unique_id" {
+#  description = "unique identifiers for all created resources"
+#  type        = string
+#  default     = "pwx"
+#}
 
 variable "resource_group_name" {
   description = "resource group of existing kubernetes cluster"
@@ -80,9 +80,9 @@ variable "resource_group_name" {
 }
 
 variable "kube_config_path" {
-  description = "Path to the k8s config file: ex `~/.kube`"
+  description = "Directory to store the kubeconfig file. If running on Schematics, use `/tmp/.schematics/.kube/config`"
   type        = string
-  default     = "/tmp"
+  default     = "./.kube/config"
 }
 
 variable "roks_version" {
