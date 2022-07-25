@@ -6,7 +6,6 @@ ibmcloud ks cluster config -c ${CLUSTER} --admin
 
 # Addons variables assigments
 
-
 # Retrieve the openshift cluster version
 ROKS_VERSION=`kubectl get clusterversion -o jsonpath='{.items[].status.history[].version}{"\n"}'`
 
