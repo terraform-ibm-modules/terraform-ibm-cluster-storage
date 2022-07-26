@@ -39,7 +39,7 @@ data "ibm_container_cluster_config" "cluster_config" {
 module "portworx" {
   source = "./../.."
 
-  ibmcloud_api_key = var.ibmcloud_api_key
+  ibmcloud_api_key = var.ibmcloud_api_key #pragma: allowlist secret
   region           = var.region
   resource_group   = var.resource_group_name
   cluster          = var.cluster
