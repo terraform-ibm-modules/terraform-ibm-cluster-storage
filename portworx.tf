@@ -2,7 +2,7 @@
 # Create 'Databases for Etcd' service instance
 #############################################
 resource "ibm_database" "etcd" {
-  count                        = var.create_external_etcd ? 1 : 0
+  count                        = var.create_external_etcd && var.is_enable_portworx ? 1 : 0
   location                     = var.region
   members_cpu_allocation_count = var.cpu_allocation_count
   members_disk_allocation_mb   = var.disk_allocation_mb
@@ -27,7 +27,7 @@ locals {
 }
 
 resource "kubernetes_secret" "etcd" {
-  count = var.create_external_etcd ? 1 : 0
+  count = var.create_external_etcd && var.is_enable_portworx ? 1 : 0
 
   metadata {
     name      = var.etcd_secret_name
