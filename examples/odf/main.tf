@@ -44,8 +44,8 @@ module "odf" {
 
   // Portworx parameters (added because git action complain)
   //region         = var.region
-  resource_group   = var.resource_group_name
-  kube_config_path = data.ibm_container_cluster_config.cluster_config.config_file_path
+  //resource_group   = var.resource_group_name
+  //kube_config_path = data.ibm_container_cluster_config.cluster_config.config_file_path
 
   // ODF parameters
   monSize             = var.monSize

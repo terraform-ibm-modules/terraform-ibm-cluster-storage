@@ -15,6 +15,7 @@ variable "ibmcloud_api_key" {
 
 variable "unique_id" {
   description = "Unique identifiers for all created resources"
+  default     = ""
   type        = string
 }
 
@@ -32,6 +33,7 @@ variable "kube_config_path" {
 variable "resource_group" {
   description = "Resource group of existing cluster"
   type        = string
+  default     = "Default"
 }
 
 ##############################################################################
@@ -58,13 +60,15 @@ variable "profile" {
 # Portworx Variables
 ##############################################################################
 variable "create_external_etcd" {
-  type = bool
-  //default     = false
+  type        = bool
+  default     = false
   description = "Do you want to create an external_etcd? `True` or `False`"
 }
 
 variable "region" {
   description = "The region Portworx will be installed in: us-south, us-east, eu-gb, eu-de, jp-tok, au-syd, etc."
+  type        = string
+  default     = "us-south"
 }
 
 # These credentials have been hard-coded because the 'Databases for etcd' service instance is not configured to have a publicly accessible endpoint by default.
