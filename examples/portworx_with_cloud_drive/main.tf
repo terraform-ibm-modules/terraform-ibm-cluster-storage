@@ -50,6 +50,7 @@ module "portworx" {
   max_storage_node_per_zone = var.max_storage_node_per_zone
   num_cloud_drives          = var.num_cloud_drives
   cloud_drives_sizes        = var.cloud_drives_sizes
+  storage_class = var.storage_class
   // These credentials have been hard-coded because the 'Databases for etcd' service instance is not configured to have a publicly accessible endpoint by default.
   // You may override these for additional security.
   create_external_etcd        = var.create_external_etcd
