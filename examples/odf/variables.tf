@@ -67,11 +67,11 @@ variable "region" {
   default     = "us-south"
 }
 
-#variable "unique_id" {
-#  description = "unique identifiers for all created resources"
-#  type        = string
-#  default     = "pwx"
-#}
+variable "unique_id" {
+  description = "unique identifiers for all created resources"
+  type        = string
+  default     = "pwx"
+}
 
 variable "resource_group_name" {
   description = "resource group of existing kubernetes cluster"

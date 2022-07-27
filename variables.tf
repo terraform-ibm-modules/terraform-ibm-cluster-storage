@@ -16,7 +16,6 @@ variable "ibmcloud_api_key" {
 variable "unique_id" {
   description = "Unique identifiers for all created resources"
   type        = string
-  default     = "pwx"
 }
 
 variable "cluster" {
