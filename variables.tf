@@ -58,8 +58,8 @@ variable "profile" {
 # Portworx Variables
 ##############################################################################
 variable "create_external_etcd" {
-  type        = bool
-  default     = false
+  type = bool
+  //default     = false
   description = "Do you want to create an external_etcd? `True` or `False`"
 }
 
