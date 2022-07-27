@@ -62,6 +62,17 @@ variable "clusterEncryption" {
 
 #################################
 
+variable "region" {
+  description = "The region of the cluster ODF will be installed on: us-south, us-east, eu-gb, eu-de, jp-tok, au-syd, etc."
+  default     = "us-south"
+}
+
+variable "kube_config_path" {
+  description = "Directory to store the kubeconfig file. If running on Schematics, use `/tmp/.schematics/.kube/config`"
+  type        = string
+  default     = "./.kube/config"
+}
+
 variable "roks_version" {
   type        = string
   description = "ROKS Cluster version (4.7 or higher)"

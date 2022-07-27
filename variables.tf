@@ -33,7 +33,7 @@ variable "kube_config_path" {
 variable "resource_group" {
   description = "Resource group of existing cluster"
   type        = string
-  default     = "Default"
+  //default     = "Default"
 }
 
 ##############################################################################
@@ -68,7 +68,7 @@ variable "create_external_etcd" {
 variable "region" {
   description = "The region Portworx will be installed in: us-south, us-east, eu-gb, eu-de, jp-tok, au-syd, etc."
   type        = string
-  default     = "us-south"
+  //default     = "us-south"
 }
 
 # These credentials have been hard-coded because the 'Databases for etcd' service instance is not configured to have a publicly accessible endpoint by default.
