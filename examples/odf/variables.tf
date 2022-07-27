@@ -67,6 +67,12 @@ variable "region" {
   default     = "us-south"
 }
 
+variable "resource_group" {
+  description = "Resource group of existing cluster"
+  type        = string
+  default     = "Default"
+}
+
 variable "kube_config_path" {
   description = "Directory to store the kubeconfig file. If running on Schematics, use `/tmp/.schematics/.kube/config`"
   type        = string
