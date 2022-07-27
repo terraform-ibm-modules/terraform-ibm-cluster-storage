@@ -67,7 +67,7 @@ variable "region" {
   default     = "us-south"
 }
 
-variable "resource_group" {
+variable "resource_group_name" {
   description = "Resource group of existing cluster"
   type        = string
   default     = "Default"
