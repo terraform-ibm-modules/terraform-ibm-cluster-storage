@@ -26,7 +26,7 @@ variable "cluster" {
 variable "resource_group_name" {
   description = "resource group of existing kubernetes cluster"
   type        = string
-  default     = "classic-odf-storage"
+  default     = "Default"
 }
 
 ##############################################################################

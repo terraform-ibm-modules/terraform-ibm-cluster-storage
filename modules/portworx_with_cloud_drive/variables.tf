@@ -31,7 +31,7 @@ variable "kube_config_path" {
 variable "resource_group" {
   description = "Resource group of existing cluster"
   type        = string
-  default     = "classic-odf-storage"
+  default     = "Default"
 }
 
 ##############################################################################
