@@ -2,7 +2,7 @@
 
 echo 'This script waits until Portworx is ready'
 echo 'Sleeping 2m...'
-sleep 2m
+sleep 120
 
 SLEEP_TIME="15s"
 LIMIT=100
@@ -39,7 +39,7 @@ done
 
 # Check if Portworx is ready
 
-if ! PX_POD=$(kubectl get pods -l name=portworx_with_cloud_drive -n kube-system -o jsonpath='{.items[0].metadata.name}'); then
+if ! PX_POD=$(kubectl get pods -l name=portworx -n kube-system -o jsonpath='{.items[0].metadata.name}'); then
   echo 'Error getting PX_POD'
   exit 1
 fi

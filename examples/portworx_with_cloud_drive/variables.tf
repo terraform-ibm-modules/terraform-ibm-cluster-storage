@@ -145,10 +145,13 @@ variable "num_cloud_drives" {
     error_message = "Maximum number of cloud drives that can be provisioned is 3"
   }
 }
-variable "storageClassName" {
-  description = "Name of the storage class that will be used to provision cloud drives"
-  type        = string
-  default     = "ibmc-vpc-block-10iops-tier"
+variable "storage_class" {
+  description = "List of the storage classes that will be used to provision cloud drives"
+  type        = list(string)
+  validation {
+    condition     = length(var.storage_class) > 0 && length(var.storage_class) < 4
+    error_message = "Maximum number of storage class that can be used is 3"
+  }
 }
 variable "cloud_drives_sizes" {
   description = "Size of the cloud drives"
@@ -163,4 +166,9 @@ variable "max_storage_node_per_zone" {
   type        = number
 }
 
+variable "px_pvc_deletion" {
+  description = "pvc should be deleted after px cleanup"
+  type=bool
+  default = false
+}
 

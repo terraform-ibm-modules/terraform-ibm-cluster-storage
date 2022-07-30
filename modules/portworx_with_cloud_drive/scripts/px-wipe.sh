@@ -275,6 +275,12 @@ kubectl delete job -n kube-system talisman                    || _rc=$?
 kubectl delete serviceaccount -n kube-system talisman-account || _rc=$?
 kubectl delete clusterrolebinding talisman-role-binding       || _rc=$?
 kubectl delete crd volumeplacementstrategies.portworx.io
+
+#Deleting all the portworx pvc from the cluster
+if [ ${PVC_DELETE} == "true" ]; then
+kubectl delete pvc -l PWX_CLUSTER_ID=$cluster -n kube-system
+fi
+
 if [ $_rc -ne 0 ]; then
    fatal "error cleaning up pods"
 fi
