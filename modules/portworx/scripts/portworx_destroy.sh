@@ -34,4 +34,4 @@ echo "Listing releases ... "
 $CMD ls --namespace default --all
 
 echo "Deleting portworx release ..."
-$CMD delete portworx_with_cloud_drive
+$CMD delete portworx

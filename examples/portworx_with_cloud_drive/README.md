@@ -71,6 +71,7 @@ module "portworx" {
 | `storage_class`        | List of Storage Classes that will be used to provision the cloud drives | `["ibmc-vpc-block-10iops-tier","",""]`  | Yes |
 | `cloud_drives_sizes`      | Sizes of the cloud drives that are going to be provisioned, no of cloud drive sizes will vary based on the no of cloud drives | `[100,0,0]`  | Yes |
 | `max_storage_node_per_zone` | maximum no of storage nodes where the disks should be provisioned automatically within a zone, remaining nodes will be storage less nodes for Portworx | 1  | Yes |
+| `px_pvc_deletion` | Set this value to `true` or `false` to delete the portworx pvc in cleanup process  | `false` | Yes |
 
 
 ## Requirements

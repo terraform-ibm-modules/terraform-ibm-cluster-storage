@@ -166,4 +166,9 @@ variable "max_storage_node_per_zone" {
   type        = number
 }
 
+variable "px_pvc_deletion" {
+  description = "pvc should be deleted after px cleanup"
+  type=bool
+  default = false
+}
 
