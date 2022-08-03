@@ -8,7 +8,6 @@ provider ibm {
 ##############################################################################
 # Data blocks
 ##############################################################################
-data ibm_iam_auth_token token {}
 
 data ibm_resource_group group {
   name = var.resource_group
