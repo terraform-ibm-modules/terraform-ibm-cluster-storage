@@ -1,7 +1,7 @@
 ##############################################################################
 # Read each worker information attached to cluster
 ##############################################################################
-data ibm_container_vpc_cluster_worker worker {
+data "ibm_container_vpc_cluster_worker" "worker" {
   count = length(data.ibm_container_vpc_cluster.cluster.workers)
 
   worker_id         = element(data.ibm_container_vpc_cluster.cluster.workers, count.index)
@@ -12,7 +12,7 @@ data ibm_container_vpc_cluster_worker worker {
 ###############################################################################
 # Read subnet attached to each worker
 ###############################################################################
-data ibm_is_subnet subnet {
+data "ibm_is_subnet" "subnet" {
   count = length(data.ibm_container_vpc_cluster_worker.worker)
 
   identifier = data.ibm_container_vpc_cluster_worker.worker[count.index].network_interfaces[0].subnet_id
@@ -22,7 +22,7 @@ data ibm_is_subnet subnet {
 # Create volume for each worker node
 ###############################################################################
 #
-resource ibm_is_volume volume {
+resource "ibm_is_volume" "volume" {
 
   depends_on = [
     data.ibm_is_subnet.subnet

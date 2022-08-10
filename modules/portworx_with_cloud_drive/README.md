@@ -1,4 +1,4 @@
-# Terraform module to create a portworx storage with cloud drive support 
+# Terraform module to create a portworx storage with cloud drive support
 
 
 #About Portworx Cloud Drive Support
@@ -84,7 +84,7 @@ module "portworx" {
 - [Terraform](https://www.terraform.io/downloads.html) >= 0.13
 - [terraform-provider-ibm](https://github.com/IBM-Cloud/terraform-provider-ibm)
 - [Helm](https://helm.sh/docs/intro/install/)
-- Curl 
+- Curl
 
 ## Install
 
