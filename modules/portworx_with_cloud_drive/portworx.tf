@@ -52,7 +52,7 @@ resource "ibm_resource_instance" "portworx" {
 
   name = "${var.unique_id}-portworx-service"
   //Todo: Change this service name once it is pushed to prod
-  service           = "portworx-test"
+  service           = "portworx"
   plan              = var.pwx_plan
   location          = var.region
   resource_group_id = data.ibm_resource_group.group.id
@@ -75,12 +75,14 @@ resource "ibm_resource_instance" "portworx" {
     secret_type      = var.secret_type
 
     cloud_drive               = var.cloud_drive
-    storageClassName          = var.storageClassName
+    storageClassName          = element(var.storage_class, 0)
+    storageClassName2         = (var.num_cloud_drives == 2) ? element(var.storage_class, 1) : ""
+    storageClassName3         = (var.num_cloud_drives == 3) ? element(var.storage_class, 2) : ""
     num_cloud_drives          = var.num_cloud_drives
     max_storage_node_per_zone = var.max_storage_node_per_zone
     size                      = element(var.cloud_drives_sizes, 0)
-    size1                     = (var.num_cloud_drives == 2) ? element(var.cloud_drives_sizes, 1) : 0
-    size2                     = (var.num_cloud_drives == 3) ? element(var.cloud_drives_sizes, 2) : 0
+    size2                     = (var.num_cloud_drives == 2) ? element(var.cloud_drives_sizes, 1) : 0
+    size3                     = (var.num_cloud_drives == 3) ? element(var.cloud_drives_sizes, 2) : 0
   }
 
   provisioner "local-exec" {
