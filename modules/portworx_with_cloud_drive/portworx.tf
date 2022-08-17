@@ -74,7 +74,7 @@ resource "ibm_resource_instance" "portworx" {
     secret_type      = var.secret_type
 
     cloud_drive               = var.cloud_drive
-    storageClassName          = element(var.storage_class,0)
+    storageClassName          = element(var.storage_class, 0)
     storageClassName2         = (var.num_cloud_drives == 2) ? element(var.storage_class, 1) : ""
     storageClassName3         = (var.num_cloud_drives == 3) ? element(var.storage_class, 2) : ""
     num_cloud_drives          = var.num_cloud_drives

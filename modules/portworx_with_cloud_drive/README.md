@@ -1,4 +1,4 @@
-# Terraform module to create a portworx storage with cloud drive support 
+# Terraform module to create a portworx storage with cloud drive support
 
 
 #About Portworx Cloud Drive Support
@@ -33,6 +33,7 @@ module "portworx" {
   max_storage_node_per_zone=var.max_storage_node_per_zone
   num_cloud_drives=var.num_cloud_drives
   cloud_drives_sizes=var.cloud_drives_sizes
+  storage_class = var.storage_class
 
   // These credentials have been hard-coded because the 'Databases for etcd' service instance is not configured to have a publicly accessible endpoint by default.
   // You may override these for additional security.
@@ -83,7 +84,7 @@ module "portworx" {
 - [Terraform](https://www.terraform.io/downloads.html) >= 0.13
 - [terraform-provider-ibm](https://github.com/IBM-Cloud/terraform-provider-ibm)
 - [Helm](https://helm.sh/docs/intro/install/)
-- Curl 
+- Curl
 
 ## Install
 
