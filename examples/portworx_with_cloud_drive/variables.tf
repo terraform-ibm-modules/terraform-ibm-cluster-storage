@@ -143,7 +143,7 @@ variable "num_cloud_drives" {
   validation {
     condition     = var.num_cloud_drives > 0 && var.num_cloud_drives < 4
     error_message = "Maximum number of cloud drives that can be provisioned is 3."
-  }h
+  }
 }
 variable "storage_class" {
   description = "List of the storage classes that will be used to provision cloud drives"
