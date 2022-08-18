@@ -68,5 +68,21 @@ module "portworx" {
   cluster_name                = var.cluster_name
   secret_type                 = var.secret_type
 }
-
-
+###################################################################
+# Uninstall portworx instance
+###################################################################
+resource "null_resource" "portworx_destroy" {
+  triggers = {
+    cluster    = var.cluster_name
+    PVC_DELETE = var.px_pvc_deletion
+  }
+  provisioner "local-exec" {
+    when       = destroy
+    command    = "/bin/bash ../../modules/portworx_with_cloud_drive/scripts/portworx_destroy.sh"
+    on_failure = fail
+    environment = {
+      cluster    = self.triggers.cluster
+      PVC_DELETE = self.triggers.PVC_DELETE
+    }
+  }
+}

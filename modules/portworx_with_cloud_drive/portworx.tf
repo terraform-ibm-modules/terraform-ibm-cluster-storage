@@ -50,8 +50,7 @@ resource "ibm_resource_instance" "portworx" {
     kubernetes_secret.etcd,
   ]
 
-  name = "${var.unique_id}-portworx-service"
-  //Todo: Change this service name once it is pushed to prod
+  name              = "${var.unique_id}-portworx-service"
   service           = "portworx"
   plan              = var.pwx_plan
   location          = var.region
