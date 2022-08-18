@@ -50,7 +50,7 @@ module "portworx" {
   max_storage_node_per_zone = var.max_storage_node_per_zone
   num_cloud_drives          = var.num_cloud_drives
   cloud_drives_sizes        = var.cloud_drives_sizes
-  storage_class = var.storage_class
+  storage_class             = var.storage_class
   // These credentials have been hard-coded because the 'Databases for etcd' service instance is not configured to have a publicly accessible endpoint by default.
   // You may override these for additional security.
   create_external_etcd        = var.create_external_etcd
@@ -71,18 +71,18 @@ module "portworx" {
 ###################################################################
 # Uninstall portworx instance
 ###################################################################
-resource "null_resource" "portworx_destroy"{
-  triggers ={
-    cluster=var.cluster_name
-    PVC_DELETE=var.px_pvc_deletion
+resource "null_resource" "portworx_destroy" {
+  triggers = {
+    cluster    = var.cluster_name
+    PVC_DELETE = var.px_pvc_deletion
   }
   provisioner "local-exec" {
-    when        = destroy
-    command     = "/bin/bash ../../modules/portworx_with_cloud_drive/scripts/portworx_destroy.sh"
-    on_failure=fail
-    environment ={
-      cluster=self.triggers.cluster
-      PVC_DELETE=self.triggers.PVC_DELETE
+    when       = destroy
+    command    = "/bin/bash ../../modules/portworx_with_cloud_drive/scripts/portworx_destroy.sh"
+    on_failure = fail
+    environment = {
+      cluster    = self.triggers.cluster
+      PVC_DELETE = self.triggers.PVC_DELETE
     }
   }
 }

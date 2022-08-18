@@ -69,9 +69,9 @@ module "portworx" {
 ###################################################################
 # Uninstall portworx instance
 ###################################################################
-resource "null_resource" "portworx_destroy"{
+resource "null_resource" "portworx_destroy" {
   provisioner "local-exec" {
-    when        = destroy
-    command     = "/bin/bash ../../modules/portworx/scripts/portworx_destroy.sh"
+    when    = destroy
+    command = "/bin/bash ../../modules/portworx/scripts/portworx_destroy.sh"
   }
 }

@@ -72,5 +72,5 @@ To remove Portworx and Storage from a cluster, execute the following command:
 Note: Please execute the below command from the examples directory
 
 ```bash
-terraform destroy 
+terraform destroy
 ```
