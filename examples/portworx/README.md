@@ -1,3 +1,5 @@
+## [Deprecated]
+Please use this link to use the terraform officially supported by the portworx team : https://registry.terraform.io/modules/portworx/portworx-enterprise/ibm/latest.
 # Terraform template to install Portworx on a VPC cluster
 
 This Terraform template installs the **Portworx Service** on VPC cluster on an IBM Cloud.
