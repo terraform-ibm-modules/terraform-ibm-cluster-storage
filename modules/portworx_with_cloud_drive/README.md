@@ -1,7 +1,9 @@
+## [Deprecated]
+Please use this link to use the terraform officially supported by the portworx team : https://registry.terraform.io/modules/portworx/portworx-enterprise/ibm/latest.
 # Terraform module to create a portworx storage with cloud drive support
 
 
-#About Portworx Cloud Drive Support
+## About Portworx Cloud Drive Support
 
 - In cloud environments, Portworx can dynamically create disks based on an input disk template whenever a new instance spins up and use those disks for the Portworx cluster.
 - Portworx fingerprints the disks and attaches them to an instance in the cluster. In this way an ephemeral instance gets its own identity.
